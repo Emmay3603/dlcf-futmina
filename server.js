@@ -4,21 +4,21 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { PrismaClient } = require("@prisma/client");
 
-const authRoutes = require("./routes/auth.routes"); 
+const authRoutes = require("./routes/auth.routes");
 const candidateRoutes = require("./routes/candid.route");
-
 
 const app = express();
 const prisma = new PrismaClient();
 
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL 
-    : ['http://localhost:5173', 'add your local-link here'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Set-Cookie'],
+  origin:
+    process.env.NODE_ENV === "production"
+      ? process.env.FRONTEND_URL
+      : ["http://localhost:5173", "https://dlcf-bosso.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "Cookie", "Set-Cookie"],
   credentials: true,
-  exposedHeaders: ['Set-Cookie']
+  exposedHeaders: ["Set-Cookie"],
 };
 
 // Middleware
@@ -26,9 +26,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use("/api/auth", authRoutes); 
+app.use("/api/auth", authRoutes);
 app.use("/api/candidates", candidateRoutes);
-
 
 // Test Route
 app.get("/", (req, res) => {
